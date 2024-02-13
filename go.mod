@@ -66,4 +66,4 @@ require (
 	sigs.k8s.io/yaml v1.3.0 // indirect
 )
 
-// replace github.com/celestiaorg/testwave => ./testwave
+replace github.com/celestiaorg/testwave => ./testwave

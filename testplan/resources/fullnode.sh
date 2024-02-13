@@ -2,6 +2,7 @@
 
 CHAINID="test"
 
-# Build genesis file incl account for passed address
-coins="1000000000000000utia"
+# Initialize the home directory
 celestia-appd init $CHAINID --chain-id $CHAINID
+
+# other configurations...

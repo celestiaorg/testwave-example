@@ -25,7 +25,7 @@ RUN mkdir -p /build/ && \
 
 FROM docker.io/alpine:3.18.4 AS production
 
-RUN apk update && apk add iproute2 curl
+RUN apk update && apk add iproute2 curl jq
 
 # Copy the worker binary
 WORKDIR /app/

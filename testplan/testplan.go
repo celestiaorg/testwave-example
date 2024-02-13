@@ -24,15 +24,28 @@ func (p *Playbook) NodeSets() []*playbook.NodeSet {
 // Setup is called by the dispatcher before the test starts.
 // It is used to prepare the environment for the test.
 func (p *Playbook) Setup() error {
-	podUID, err := names.NewRandomK8(Name + "-consensus")
+	podUID1, err := names.NewRandomK8(Name + "-nodeset1")
 	if err != nil {
 		return err
 	}
+	podUID2, err := names.NewRandomK8(Name + "-nodeset2")
+	if err != nil {
+		return err
+	}
+	//TODO: Since I figured out that containers in a pod share the same network stack and
+	// as we have to use privileged mode and NET_ADMIN capability, I can't run two same
+	// applications on the same pods because there will be conflicts with the ports
+	// and traffic shape of one container will affect the others.
 	p.nodeSets = []*playbook.NodeSet{
 		{
-			UID: podUID,
+			UID: podUID1,
 			Workers: []*worker.Worker{
 				validatorWorkerSetup(),
+			},
+		},
+		{
+			UID: podUID2,
+			Workers: []*worker.Worker{
 				fullNodeWorkerSetup(),
 			},
 		},

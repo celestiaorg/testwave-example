@@ -65,6 +65,7 @@ func fullNodeWorkerRun(w *worker.Worker) error {
 	}
 	logrus.Infof("Validator UID: %s", validatorUID)
 
+	// in case we need some other node's IP, we can use the following code
 	logrus.Info("Getting the Validator IP...")
 	ctx := context.TODO()
 	validatorIp, err := w.Message.GetIPWaiting(ctx, validatorUID)
@@ -73,12 +74,30 @@ func fullNodeWorkerRun(w *worker.Worker) error {
 	}
 	logrus.Infof("Validator IP: %s", validatorIp)
 
+	// Running a shell script
 	cmd := exec.CommandContext(ctx, "sh", "/opt/fullnode.sh")
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	if err := cmd.Run(); err != nil {
+	res, err := cmd.CombinedOutput()
+	if err != nil {
+		logrus.Errorf("Failed to run the fullnode.sh: %v", string(res))
 		return err
 	}
+	if len(res) > 0 {
+		logrus.Infof("fullnode.sh output: %s", string(res))
+	}
+
+	// Get validator seed and if it is not there, keep waiting as the validator
+	// might not be ready yet.
+	// It is configured to spread the seed once it reaches at least 1 block
+	vsIf, err := w.Message.GetWaiting(ctx, msgSeedPrefix+validatorUID)
+	if err != nil {
+		return err
+	}
+	validatorSeed, ok := vsIf.(string)
+	if !ok {
+		return fmt.Errorf("failed to cast validator seed: %v", vsIf)
+	}
+
+	logrus.Infof("Validator Seed: %s", validatorSeed)
 
 	// Receive the genesis file from the validator node
 	if err := getGenesisFileFromValidator(w); err != nil {
@@ -86,7 +105,7 @@ func fullNodeWorkerRun(w *worker.Worker) error {
 	}
 
 	// Now start the node
-	cmd = exec.CommandContext(ctx, "celestia-appd", "start")
+	cmd = exec.CommandContext(ctx, "celestia-appd", "start", "--p2p.seeds", validatorSeed)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	if err := cmd.Run(); err != nil {
@@ -97,7 +116,12 @@ func fullNodeWorkerRun(w *worker.Worker) error {
 }
 
 func getGenesisFileFromValidator(w *worker.Worker) error {
-	value, err := w.Message.ReceiveGlobal(genesisFileID)
+	validatorUID, ok := os.LookupEnv(envValidatorUID)
+	if !ok {
+		return fmt.Errorf("failed to get validator UID from ENV var `%s`", envValidatorUID)
+	}
+
+	value, err := w.Message.GetWaiting(context.TODO(), msgGenesisFileIDPrefix+validatorUID)
 	if err != nil {
 		return err
 	}
