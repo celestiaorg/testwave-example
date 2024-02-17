@@ -2,8 +2,8 @@ github.com/celestiaorg/bittwister v0.0.0 h1:phSqQfMsNSbS78ab9HTQ4mEAjWDXxxSLmBi1
 github.com/celestiaorg/bittwister v0.0.0/go.mod h1:1EF5MfOxVf0WC51Gb7pJ6bcZxnXKNAf9pqWtjgPBAYc=
 github.com/celestiaorg/knuu v0.10.1-0.20240202095902-8e490c520b5f h1:GxKbn7K5iUFOunjbvzlOKfS0aZqcJbFMaqrWDXAVKKs=
 github.com/celestiaorg/knuu v0.10.1-0.20240202095902-8e490c520b5f/go.mod h1:g1PY/WOBhXrQoJ4uYZZCwoXIM1xbEaOE1OHsTpZ5EUk=
-github.com/celestiaorg/testwave v0.0.0-20240212192010-ad3debb96417 h1:BjbHRDZeTOR3KFX4vLNy2fzQoDlyEpcR8z5tiv8TYg0=
-github.com/celestiaorg/testwave v0.0.0-20240212192010-ad3debb96417/go.mod h1:0m88Lnla8kwXVp4R73Is/gKtZojC9mW/oqZOD5G9aU0=
+github.com/celestiaorg/testwave v0.0.0-20240213192001-7ab804ceead3 h1:l17iIw33bwo1Vny/g+QBHgKY3/2JWGyg7K1kutiCHJg=
+github.com/celestiaorg/testwave v0.0.0-20240213192001-7ab804ceead3/go.mod h1:0m88Lnla8kwXVp4R73Is/gKtZojC9mW/oqZOD5G9aU0=
 github.com/cilium/ebpf v0.12.3 h1:8ht6F9MquybnY97at+VDZb3eQQr8ev79RueWeVaEcG4=
 github.com/cilium/ebpf v0.12.3/go.mod h1:TctK1ivibvI3znr66ljgi4hqOT8EYQjz1KWBfb1UVgM=
 github.com/cpuguy83/go-md2man/v2 v2.0.3/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=

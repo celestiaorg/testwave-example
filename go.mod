@@ -4,7 +4,7 @@ go 1.21.5
 
 require (
 	github.com/celestiaorg/knuu v0.10.1-0.20240202095902-8e490c520b5f
-	github.com/celestiaorg/testwave v0.0.0-20240212192010-ad3debb96417
+	github.com/celestiaorg/testwave v0.0.0-20240213192001-7ab804ceead3
 	github.com/sirupsen/logrus v1.9.3
 )
 
@@ -66,4 +66,4 @@ require (
 	sigs.k8s.io/yaml v1.3.0 // indirect
 )
 
-replace github.com/celestiaorg/testwave => ./testwave
+// replace github.com/celestiaorg/testwave => ./testwave
