@@ -13,6 +13,8 @@ type Playbook struct {
 	nodeSets []*playbook.NodeSet
 }
 
+var _ = playbook.Playbook(&Playbook{})
+
 func (p *Playbook) Name() string {
 	return Name
 }
